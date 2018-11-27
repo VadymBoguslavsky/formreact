@@ -1,1 +1,1 @@
-[form](https://github.com/VadymBoguslavsky/formreact).
+[form](https://vadymboguslavsky.github.io/formreact/).
