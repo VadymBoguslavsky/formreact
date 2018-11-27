@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/VadymBoguslavsky/formreact/precache-manifest.2049fb742dc67b760fae9aa663d6d2cf.js"
+  "/formreact/precache-manifest.a3268e5c78a425a43bffef19de5ff7c7.js"
 );
 
 workbox.clientsClaim();
@@ -28,7 +28,7 @@ self.__precacheManifest = [].concat(self.__precacheManifest || []);
 workbox.precaching.suppressWarnings();
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
 
-workbox.routing.registerNavigationRoute("/VadymBoguslavsky/formreact/index.html", {
+workbox.routing.registerNavigationRoute("/formreact/index.html", {
   
   blacklist: [/^\/_/,/\/[^\/]+\.[^\/]+$/],
 });
