@@ -1,41 +1,56 @@
-import React, {Component} from 'react';
-class Dialog extends Component {
-   Dialog(popup) {
-    this.showPopup = function () {
-      var main = document.querySelector(".wrapper");
-      var overlay = document.createElement("div");
-      var popups = popup;
-      overlay.classList.add("overlay", "show-overlay");
-      popups.classList.add("show-popup");
-      overlay.appendChild(popups);
-      main.appendChild(overlay);
-      var hide = document.querySelectorAll(".btn-closePopup");
-      hide.forEach(el => {
-        el.addEventListener("click", hidePopup => {
-          const overlay = document.querySelectorAll(".overlay");
-          const popup = document.querySelectorAll(".popup");
-          overlay.forEach(el => el.classList.remove("show-overlay"));
-          popup.forEach(el => el.classList.remove("show-popup"));
-        })
-      });
-    }
-  }
-  generateCloseBtn (popup) {
-    var closeBtn = document.createElement("button");
-    closeBtn.classList.add("btn-closePopup");
-    var mainPopup = popup;
-    closeBtn.innerHTML = "X";
-    mainPopup.appendChild(closeBtn);
-  }
+import React from 'react';
+import PropTypes from 'prop-types';
 
-  render (){
+class Modal extends React.Component {
+  render() {
+    // Render nothing if the "show" prop is false
+    if(!this.props.show) {
+      return null;
+    }
+
+    // The gray background
+    const backdropStyle = {
+      position: 'absolute',
+      top: 0,
+      bottom: 0,
+      left: 0,
+      right: 0,
+      backgroundColor: 'red',
+      width:300,
+      height:300,
+      padding: 50
+    };
+
+    // The modal "window"
+    const modalStyle = {
+      backgroundColor: '#fff',
+      borderRadius: 5,
+      maxWidth: 500,
+      minHeight: 300,
+      margin: '0 auto',
+      padding: 30
+    };
+
     return (
-      <div class="popup info">
-         <p class="inner-text">Popup</p>
-         <button class="btn-cancel same">Save</button>
-         <button class="btn-uninstall same">Cancel</button>
+      <div className="backdrop__window" style={{backdropStyle}}>
+        <div className="modal__window" style={{modalStyle}}>
+          {this.props.children}
+
+          <div className="footer">
+            <button onClick={this.props.onClose}>
+              Close
+            </button>
+          </div>
+        </div>
       </div>
-    )
+    );
   }
 }
-export default Dialog;
+
+Modal.propTypes = {
+  onClose: PropTypes.func.isRequired,
+  show: PropTypes.bool,
+  children: PropTypes.node
+};
+
+export default Modal;

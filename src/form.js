@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import Dialog from './modal';
+import Modal from './modal';
 import { FormErrors } from './FormErrors';
 class TaskForm extends Component {
   constructor(props) {
@@ -13,6 +13,7 @@ class TaskForm extends Component {
       address: '',
       notes: '',
       email: '',
+      isOpen: false,
       password: '',
       formErrors: { email: '', password: '', name: '', address: '', last: '' },
       emailValid: false,
@@ -39,6 +40,12 @@ class TaskForm extends Component {
       e.target.address.value,
       e.target.notes.value
       )
+      
+  }
+  toggleModal = () => {
+    this.setState({
+      isOpen: !this.state.isOpen
+    });
   }
 
   onChangeDueDate(e) {
@@ -202,7 +209,8 @@ class TaskForm extends Component {
               onChange={(event) => this.handleUserInput(event)}
               name='password' />
           </div>
-          <div className="form-group createlist">
+          <div className="form-group createlist"> 
+            <div>Country*</div>
             <select value={this.state.value} onChange={this.onChange}>
               <option value="grapefruit">Grapefruit</option>
               <option value="lime">Lime</option>
@@ -223,10 +231,18 @@ class TaskForm extends Component {
             </div>
           </div>
           <div className="form-group">
-            <button type="submit" className="btn btn-primary"
-              disabled={!this.state.formValid}>Sign up</button>
+            <button type="submit" className="btn btn-primary"  
+                    disabled={!this.state.formValid} 
+                    onClick={this.toggleModal}>
+              Sign up
+            </button>
+            <Modal show={this.state.isOpen}
+              onClose={this.toggleModal}>
+              Here's some content for the modal
+            </Modal>
           </div>
         </form>
+        
       </div>
     )
   }
