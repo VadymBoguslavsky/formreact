@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import Modal from './modal';
+import Modal from './Modal';
 import { FormErrors } from './FormErrors';
 class TaskForm extends Component {
   constructor(props) {
@@ -34,6 +34,7 @@ class TaskForm extends Component {
 
   onSubmit(e) {
     e.preventDefault();
+    this.toggleModal();
     console.log(
       e.target.name.value,
       e.target.last.value,
@@ -53,17 +54,17 @@ class TaskForm extends Component {
       birthday: e
     });
   }
-  handleUserInput(e) {
+  handleUserInput = (e) => {
     const name = e.target.name;
     const value = e.target.value;
     this.setState({ [name]: value },
       () => { this.validateField(name, value) });
   }
-  onChange(e) {
+  onChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
     this.setState({ value: e.target.value });
   }
-  validateField(fieldName, value) {
+  validateField = (fieldName, value) => {
     let fieldValidationErrors = this.state.formErrors;
     let emailValid = this.state.emailValid;
     let firstValid = this.state.firstValid;
@@ -105,17 +106,24 @@ class TaskForm extends Component {
     }, this.validateForm);
   }
 
-  validateForm() {
-    this.setState({ formValid: this.state.emailValid && this.state.passwordValid });
+  validateForm = () => {
+    this.setState({ 
+      formValid: 
+        this.state.emailValid && 
+        this.state.passwordValid && 
+        this.state.firstValid && 
+        this.state.lastValid && 
+        this.state.addressValid  
+    });
   }
-  setGender(e) {
+  setGender = (e) => {
     this.setState({
       gender: e.target.value
     })
   }
 
 
-  errorClass(error) {
+  errorClass = (error) => {
     return (error.length === 0 ? '' : 'has-error');
   }
   render() {
@@ -136,7 +144,7 @@ class TaskForm extends Component {
                 placeholder="Name"
                 required={true}
                 value={this.state.name}
-                onChange={(event) => this.handleUserInput(event)}
+                onChange={this.handleUserInput}
               />
             </div>
           </div>
@@ -150,7 +158,7 @@ class TaskForm extends Component {
                 placeholder="last"
                 required={true}
                 value={this.state.last}
-                onChange={(event) => this.handleUserInput(event)} />
+                onChange={this.handleUserInput} />
             </div>
           </div>
           <div className={`form-group ${this.errorClass(this.state.formErrors.address)}`}>
@@ -163,7 +171,7 @@ class TaskForm extends Component {
                 placeholder="Address"
                 required={true}
                 value={this.state.address}
-                onChange={(event) => this.handleUserInput(event)} />
+                onChange={this.handleUserInput} />
             </div>
           </div>
 
@@ -198,7 +206,7 @@ class TaskForm extends Component {
             <input type='email'
               value={this.state.email}
               className='form-control'
-              onChange={(event) => this.handleUserInput(event)}
+              onChange={this.handleUserInput}
               name='email' />
           </div>
           <div className={`form-group ${this.errorClass(this.state.formErrors.password)}`}>
@@ -206,7 +214,7 @@ class TaskForm extends Component {
             <input type='password'
               value={this.state.password}
               className='form-control'
-              onChange={(event) => this.handleUserInput(event)}
+              onChange={this.handleUserInput}
               name='password' />
           </div>
           <div className="form-group createlist"> 
@@ -233,7 +241,7 @@ class TaskForm extends Component {
           <div className="form-group">
             <button type="submit" className="btn btn-primary"  
                     disabled={!this.state.formValid} 
-                    onClick={this.toggleModal}>
+                    >
               Sign up
             </button>
             <Modal show={this.state.isOpen}

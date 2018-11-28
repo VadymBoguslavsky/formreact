@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import TaskForm from './form';
-import logo from './logo.svg';
-import './App.css';
+import TaskForm from './Form';
+import logo from '../logo.svg';
+import '../css/App.css';
 
 
 class App extends Component {
